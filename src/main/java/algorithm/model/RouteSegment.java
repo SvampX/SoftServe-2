@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 public class RouteSegment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column

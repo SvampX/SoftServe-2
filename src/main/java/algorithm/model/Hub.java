@@ -14,7 +14,7 @@ import java.util.List;
 public class Hub implements Comparable<Hub> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column

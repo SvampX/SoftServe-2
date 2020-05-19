@@ -42,6 +42,29 @@ public class Main {
         List<Hub> path = getShortestPathTo(Kyiv);
         System.out.println("Path: " + path);
 
+        free(hubs);
+        Kharkiv.getClosestRelations().remove(0);
+
+        computePaths(Kharkiv); // run Dijkstra
+        System.out.println("Distance to " + Kyiv + ": " + Kyiv.getMinDistance());
+        path = getShortestPathTo(Kyiv);
+        System.out.println("Path: " + path);
+
+        free(hubs);
+        Kharkiv.getClosestRelations().remove(1);
+
+        computePaths(Kharkiv); // run Dijkstra
+        System.out.println("Distance to " + Kyiv + ": " + Kyiv.getMinDistance());
+        path = getShortestPathTo(Kyiv);
+        System.out.println("Path: " + path);
+
+    }
+
+    private static void free(List<Hub> path) {
+        for (Hub hub : path) {
+            hub.setPrevious(null);
+            hub.setMinDistance(Double.POSITIVE_INFINITY);
+        }
     }
 
     private static void initAndSave() {
