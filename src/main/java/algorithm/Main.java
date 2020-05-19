@@ -4,7 +4,6 @@ import algorithm.model.Hub;
 import algorithm.model.RouteSegment;
 import algorithm.service.HubService;
 import algorithm.service.RouteSegmentService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,33 +30,41 @@ public class Main {
         SpringApplication.run(Main.class, args);
         //initAndSave();
         List<Hub> hubs = hubService.findAll();
+        List<Hub> path;
+
         Hub Kharkiv = hubs.stream()
                 .filter(hub -> hub.getName().equals("Kharkiv"))
                 .findFirst().orElseThrow();
         Hub Kyiv = hubs.stream()
                 .filter(hub -> hub.getName().equals("Kyiv"))
                 .findFirst().orElseThrow();
-        computePaths(Kharkiv); // run Dijkstra
-        System.out.println("Distance to " + Kyiv + ": " + Kyiv.getMinDistance());
-        List<Hub> path = getShortestPathTo(Kyiv);
-        System.out.println("Path: " + path);
 
-        free(hubs);
+        getPath(Kharkiv, Kyiv);
+
         Kharkiv.getClosestRelations().remove(0);
+        getPath(hubs, Kharkiv, Kyiv);
 
-        computePaths(Kharkiv); // run Dijkstra
-        System.out.println("Distance to " + Kyiv + ": " + Kyiv.getMinDistance());
-        path = getShortestPathTo(Kyiv);
-        System.out.println("Path: " + path);
-
-        free(hubs);
         Kharkiv.getClosestRelations().remove(1);
+        free(hubs);
 
-        computePaths(Kharkiv); // run Dijkstra
-        System.out.println("Distance to " + Kyiv + ": " + Kyiv.getMinDistance());
-        path = getShortestPathTo(Kyiv);
+        getPath(hubs, Kharkiv, Kyiv);
+    }
+
+    private static void getPath(Hub kharkiv, Hub kyiv) {
+        computePaths(kharkiv); // run Dijkstra
+        System.out.println("Distance to " + kyiv + ": " + kyiv.getMinDistance());
+        List<Hub> path = getShortestPathTo(kyiv);
         System.out.println("Path: " + path);
+    }
 
+    private static void getPath(List<Hub> hubs, Hub kharkiv, Hub kyiv) {
+        List<Hub> path;
+        free(hubs);
+
+        computePaths(kharkiv); // run Dijkstra
+        System.out.println("Distance to " + kyiv + ": " + kyiv.getMinDistance());
+        path = getShortestPathTo(kyiv);
+        System.out.println("Path: " + path);
     }
 
     private static void free(List<Hub> path) {
