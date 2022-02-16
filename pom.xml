@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>11</java.version>
-        <posrgresql.connector.vercion>42.2.12</posrgresql.connector.vercion>
+        <posrgresql.connector.vercion>42.3.3</posrgresql.connector.vercion>
         <mysql.connetor.version>8.0.20</mysql.connetor.version>
     </properties>
 
